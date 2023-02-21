@@ -7,13 +7,25 @@ export const postRouter = createTRPCRouter({
     return ctx.prisma.post.findMany();
   }),
   create: protectedProcedure
-    .input(z.object({ title: z.string() }))
+    .input(
+      z.object({ title: z.string(), content: z.string(), userId: z.string() })
+    )
     .mutation(async ({ ctx, input }) => {
-      const post = await ctx.prisma.post.create({
+      return ctx.prisma.post.create({
         data: {
           title: input.title,
           content: input.content,
-          userId: ctx.session.user.id,
+          userId: input.userId || ctx.session.user.id,
+        },
+      });
+    }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.post.delete({
+        where: {
+          id: input.id,
         },
       });
     }),

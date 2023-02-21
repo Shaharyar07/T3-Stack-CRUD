@@ -4,10 +4,9 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Header from "./components/Header";
 import { api } from "~/utils/api";
+import Main from "./components/Main";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
   return (
     <>
       <Head>
@@ -16,6 +15,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      <Main />
     </>
   );
 };

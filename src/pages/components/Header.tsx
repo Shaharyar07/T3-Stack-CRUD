@@ -3,10 +3,10 @@ const Header = () => {
   const { data: session } = useSession();
   return (
     <div>
-      <header className="body-font ">
+      <header className="bg-gray-200 ">
         <div className="container  flex flex-col items-center justify-between p-5 md:flex-row">
           <a className="title-font mb-4 flex items-center font-medium md:mb-0">
-            <span className="ml-5 text-2xl">Post It</span>
+            <span className="ml-5 text-2xl font-bold ">Post It</span>
           </a>
 
           <div>
