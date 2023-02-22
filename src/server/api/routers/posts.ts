@@ -4,7 +4,11 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.post.findMany();
+    return ctx.prisma.post.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
   }),
   create: protectedProcedure
     .input(

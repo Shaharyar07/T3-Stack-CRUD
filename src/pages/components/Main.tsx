@@ -1,4 +1,3 @@
-"use client";
 import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { useState } from "react";
@@ -17,22 +16,26 @@ const Main = () => {
       enabled: session?.user !== undefined,
     }
   );
-  const createPost = api.post.create.useMutation({});
-  const deletePost = api.post.delete.useMutation({});
+  const createPost = api.post.create.useMutation({
+    onSuccess: () => {
+      refetchPosts();
+    },
+  });
+  const deletePost = api.post.delete.useMutation({
+    onSuccess: () => {
+      refetchPosts();
+    },
+  });
   const handleSubmit = async (e: any) => {
     e.preventDefault(); // prevent page refresh
     setPost({ ...post, userId: session?.user?.id });
 
-    console.log(post);
     createPost.mutate(post);
     await refetchPosts();
     setPost({ title: "", content: "", userId: "" });
   };
   const handleDelete = async (id: string) => {
-    deletePost.mutate({
-      id,
-    });
-    await refetchPosts();
+    deletePost.mutate({ id });
   };
   return (
     <div className="">
